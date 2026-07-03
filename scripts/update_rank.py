@@ -70,10 +70,10 @@ block = (f"<!-- KAGGLE-RANK:START -->\n{badge}\n\n"
          f"[leaderboard](https://www.kaggle.com/competitions/{COMP}/leaderboard) "
          f"· updated {updated}\n<!-- KAGGLE-RANK:END -->")
 
-readme = open("README.md", encoding="utf-8").read()
+readme = open("README.md", encoding="utf-8").read().replace("\r\n", "\n").replace("\r", "\n")
 if "<!-- KAGGLE-RANK:START -->" in readme:
     readme = re.sub(r"<!-- KAGGLE-RANK:START -->.*?<!-- KAGGLE-RANK:END -->", block, readme, flags=re.S)
 else:
     readme = block + "\n\n" + readme
-open("README.md", "w", encoding="utf-8").write(readme)
+open("README.md", "w", encoding="utf-8", newline="\n").write(readme)
 print("done")
