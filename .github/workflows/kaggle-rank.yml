@@ -2,7 +2,7 @@ name: kaggle-rank
 on:
   schedule:
     - cron: "0 */6 * * *"   # every 6 hours
-  workflow_dispatch:          # manual "Run workflow" button
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
@@ -15,19 +15,20 @@ jobs:
           python-version: "3.11"
       - name: Install current Kaggle CLI
         run: pip install --quiet --upgrade kaggle
-      - name: Configure Kaggle auth (new KGAT_ token -> access_token)
-        env:
-          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
-        run: |
-          mkdir -p ~/.kaggle
-          TOKEN=$(python -c "import os;print(os.environ['KAGGLE_KEY'].strip().strip(chr(34)).strip(chr(39)))")
-          printf '%s' "$TOKEN" > ~/.kaggle/access_token
-          chmod 600 ~/.kaggle/access_token
-          echo "wrote access_token (length: ${#TOKEN}, starts with: ${TOKEN:0:5})"
       - name: Update rank
         env:
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
           KAGGLE_TEAM: ${{ vars.KAGGLE_TEAM }}
-        run: python scripts/update_rank.py
+        run: |
+          # New Kaggle tokens (KGAT_...) authenticate via KAGGLE_API_TOKEN.
+          TOKEN=$(python -c "import os;print(os.environ['KAGGLE_KEY'].strip().strip(chr(34)).strip(chr(39)))")
+          echo "token length: ${#TOKEN}, starts with: ${TOKEN:0:5}"
+          # write both auth methods for good measure
+          mkdir -p ~/.kaggle
+          printf '%s' "$TOKEN" > ~/.kaggle/access_token
+          chmod 600 ~/.kaggle/access_token
+          export KAGGLE_API_TOKEN="$TOKEN"
+          python scripts/update_rank.py
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
