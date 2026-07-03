@@ -33,6 +33,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .github/kaggle-rank.json README.md
+          git add .github/kaggle-rank.json
           git commit -m "chore: update kaggle rank" || echo "no change"
           git push
