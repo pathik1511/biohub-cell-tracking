@@ -1,0 +1,74 @@
+# ============================================================
+# PRIVATE — the 0.872 winning solution + its logic (DO NOT PUSH)
+# Keep the competitive recipe (trained U-Net + hybrid + TTA) out of
+# the public repo. Delete lines here if you decide to open-source them.
+# ------------------------------------------------------------
+# winning-logic package modules
+src/biohub/unet.py
+src/biohub/detect.py
+src/biohub/pipeline.py
+# training / tuning of the winning models
+scripts/train_detector.py
+scripts/tune_unet.py
+scripts/sweep.py
+# generated kernels that embed the winning logic (baseline-original stays public)
+kernels/inference_kernel.py
+kernels/inference_hybrid.py
+kernels/inference_hybrid_tta.py
+kernels/inference_hybrid_ds2.py
+kernels/inference_ens.py
+# winning configs
+configs/hybrid.json
+configs/hybrid_tta.json
+configs/hybrid_tta_ds2.json
+configs/hybrid_tta_m*.json
+configs/hybrid_md45.json
+configs/hybrid_kaggle*.json
+configs/unet.json
+configs/unet_best.json
+configs/detect_best.json
+configs/ens.json
+configs/ens_kaggle.json
+configs/sweeps/
+# method write-ups (describe the winning approach)
+ROADMAP.md
+RESULTS.md
+docs/SUBMITTING.md
+experiments/
+
+# ============================================================
+# Data (large; download via scripts/download_data.py)
+data/
+*.zarr/
+*.geff/
+*.zip
+
+# Model checkpoints / weights
+models/
+*.pt
+*.pth
+*.ckpt
+
+# Submissions
+submission*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# Kaggle creds — never commit
+kaggle.json
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# stray junk files
+__t
+Create

@@ -1,0 +1,11 @@
+{
+  "detector": "blob",
+  "dog_scales": [[1.5, 4.0], [2.2, 5.5]],
+  "rel_threshold": 0.045,
+  "min_distance_um": 3.2,
+  "max_peaks": 40000,
+  "max_link_um": 8.0,
+  "close_gaps": true,
+  "max_gap": 1,
+  "gap_dist_um": 6.0
+}
