@@ -21,8 +21,11 @@ jobs:
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
         run: |
           mkdir -p ~/.kaggle
-          printf '{"username":"%s","key":"%s"}' "$KAGGLE_USERNAME" "$KAGGLE_KEY" > ~/.kaggle/kaggle.json
+          KU=$(printf '%s' "$KAGGLE_USERNAME" | tr -d '\r\n ')
+          KK=$(printf '%s' "$KAGGLE_KEY" | tr -d '\r\n ')
+          printf '{"username":"%s","key":"%s"}' "$KU" "$KK" > ~/.kaggle/kaggle.json
           chmod 600 ~/.kaggle/kaggle.json
+          echo "wrote kaggle.json for user: $KU (key length: ${#KK})"
       - name: Update rank
         env:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
